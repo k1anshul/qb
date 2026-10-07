@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Interview Prep Library</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--y:#fad95e;--bg:#faf6ea;--ink:#111;--lav:#e6e6fa;--mut:#666}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,sans-serif}
+.top{height:54px;background:var(--y);border-bottom:2px solid var(--ink);display:flex;align-items:center;padding:0 24px;font-weight:800;font-size:20px;letter-spacing:-.5px}
+.hero{max-width:1100px;margin:0 auto;padding:44px 22px 10px}
+.tag{display:inline-block;background:var(--ink);color:var(--y);font:700 12px 'JetBrains Mono',monospace;letter-spacing:.14em;padding:11px 16px;border-radius:6px;margin-bottom:18px}
+h1{font-size:clamp(30px,5vw,46px);line-height:1.1;letter-spacing:-1.3px;margin:0 0 12px;font-weight:800}
+.hero p{color:var(--mut);margin:0 0 22px;max-width:620px}
+.search{width:100%;max-width:420px;padding:10px 14px;border:2px solid var(--ink);border-radius:10px;font:inherit;font-size:15px;background:#fff}
+.grid{max-width:1100px;margin:0 auto;padding:20px 22px 60px;display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:24px}
+.card{display:flex;flex-direction:column;background:#fff;color:var(--ink);text-decoration:none;border:2px solid var(--ink);border-radius:14px;box-shadow:4px 4px 0 var(--ink);padding:20px;transition:transform .12s,box-shadow .12s}
+.card:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+.icon{width:46px;height:46px;border-radius:10px;border:2px solid var(--ink);background:var(--y);display:grid;place-items:center;font-size:24px;margin-bottom:14px}
+.card h2{margin:0 0 6px;font-size:19px;letter-spacing:-.3px;line-height:1.25}
+.card p{margin:0 0 16px;color:#444;font-size:14px;flex:1}
+.meta{display:flex;justify-content:space-between;align-items:center;font:700 11px 'JetBrains Mono',monospace;letter-spacing:.08em}
+.pill{background:var(--lav);border:2px solid var(--ink);border-radius:99px;padding:2px 10px}
+.go{font-weight:800}
+.empty{grid-column:1/-1;color:var(--mut);text-align:center;padding:30px}
+</style>
+</head>
+<body>
+<div class="top">Interview Prep</div>
+<div class="hero">
+  <span class="tag">STUDY LIBRARY</span>
+  <h1>Interview Prep Library</h1>
+  <p>Pick a guide below. Each one opens as its own page with questions, answers and a search box.</p>
+  <input class="search" id="s" placeholder="Search guides…" autocomplete="off">
+</div>
+<div class="grid" id="grid"></div>
+
+<script>
+/* ADD A NEW GUIDE = ADD ONE LINE HERE.
+   file: the html filename in the same folder
+   count: optional text shown on the card (e.g. "224 questions") */
+const GUIDES = [
+  { file: "data-scientist.html", icon: "📊", title: "Data Scientist Interview Q&A", desc: "ML, deep learning, statistics, SQL, LLMs, culture fit and brainteasers.", count: "224 questions" },
+  // { file: "machine-learning.html", icon: "🤖", title: "Machine Learning", desc: "Short description of the guide.", count: "50 questions" },
+  // { file: "sql.html",              icon: "🗄️", title: "SQL Practice",     desc: "Short description of the guide.", count: "30 questions" },
+];
+
+const grid = document.getElementById('grid');
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function render(list){
+  grid.innerHTML = list.length ? list.map(g => `
+    <a class="card" href="${esc(g.file)}">
+      <div class="icon">${g.icon || '📘'}</div>
+      <h2>${esc(g.title)}</h2>
+      <p>${esc(g.desc || '')}</p>
+      <div class="meta"><span class="pill">${esc(g.count || 'GUIDE')}</span><span class="go">OPEN →</span></div>
+    </a>`).join('') : '<div class="empty">No guides match your search.</div>';
+}
+render(GUIDES);
+document.getElementById('s').addEventListener('input', e => {
+  const v = e.target.value.trim().toLowerCase();
+  render(GUIDES.filter(g => (g.title + ' ' + (g.desc || '')).toLowerCase().includes(v)));
+});
+</script>
+</body>
+</html>
