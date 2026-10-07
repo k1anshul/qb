@@ -6,7 +6,7 @@
 *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:80px}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.7 Inter,system-ui,sans-serif}
 .top{position:sticky;top:0;z-index:20;height:54px;background:var(--y);border-bottom:2px solid var(--ink);display:flex;align-items:center;gap:22px;padding:0 24px}
-.brand{font-weight:800;font-size:20px;letter-spacing:-.5px}.top a{color:var(--ink);text-decoration:none;font-weight:600;font-size:14px}
+.brand{font-weight:800;font-size:20px;letter-spacing:-.5px}.top a.brand{font-size:20px;font-weight:800;letter-spacing:-.5px}.top a{color:var(--ink);text-decoration:none;font-weight:600;font-size:14px}
 .search{margin-left:auto;position:relative}.search input{width:280px;max-width:44vw;padding:7px 12px;border:2px solid var(--ink);border-radius:10px;font:inherit;font-size:14px;background:#fff}
 #res{display:none;position:absolute;right:0;top:42px;width:420px;max-width:92vw;max-height:60vh;overflow:auto;background:#fff;border:2px solid var(--ink);border-radius:10px;box-shadow:4px 4px 0 var(--ink)}
 #res a{display:block;padding:8px 12px;border-bottom:1px solid #eee;font-size:13px;line-height:1.4}#res a:hover{background:var(--lav)}#res small{color:var(--mut);display:block}
@@ -41,7 +41,7 @@ figure{margin:16px 0;background:#fff;border:2px solid var(--ink);border-radius:1
 @media(max-width:1100px){.page.on{display:block}.toc{display:none}}
 @media(max-width:820px){.wrap{display:block;padding:16px 14px}.side{display:none;position:fixed;inset:60px 12px auto 12px;z-index:30;max-height:75vh}.side.open{display:block}.burger{display:block}.top a.l{display:none}}
 </style></head><body>
-<header class="top"><button class="burger" onclick="document.querySelector('.side').classList.toggle('open')">☰</button><span class="brand">Interview Prep</span><a class="l" href="#">Data Science Interview</a><a class="l" href="#">159 Questions</a>
+<header class="top"><button class="burger" onclick="document.querySelector('.side').classList.toggle('open')">☰</button><a class="brand" href="index.html" title="Back to home">Interview Prep</a><a class="l" href="#">Data Science Interview</a><a class="l" href="#">159 Questions</a>
 <div class="search"><input id="q" placeholder="Search 159 questions…" autocomplete="off"><div id="res"></div></div></header>
 <div class="wrap"><nav class="side"><a href="#statistics-quick-answers" data-sec="statistics-quick-answers"><span class="num">01</span>Statistics · Quick Answers<em>9</em></a><a href="#data-science-basics" data-sec="data-science-basics"><span class="num">02</span>Data Science Basics<em>4</em></a><a href="#statistics" data-sec="statistics"><span class="num">03</span>Statistics<em>23</em></a><a href="#data-analysis" data-sec="data-analysis"><span class="num">04</span>Data Analysis<em>12</em></a><a href="#machine-learning" data-sec="machine-learning"><span class="num">05</span>Machine Learning<em>29</em></a><a href="#deep-learning" data-sec="deep-learning"><span class="num">06</span>Deep Learning<em>32</em></a><a href="#applied-practice" data-sec="applied-practice"><span class="num">07</span>Applied Practice<em>29</em></a><a href="#basic-concepts" data-sec="basic-concepts"><span class="num">08</span>Basic Concepts<em>21</em></a></nav><main><section class="page" id="page-statistics-quick-answers" data-sec="statistics-quick-answers"><div class="main"><span class="tag">DATA SCIENCE INTERVIEW Q&amp;A · 159 QUESTIONS</span>
 <h1>01 · Statistics · Quick Answers · Interview Questions</h1>
