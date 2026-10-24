@@ -16,16 +16,22 @@ body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-u
 h1{font-size:clamp(30px,5vw,46px);line-height:1.1;letter-spacing:-1.3px;margin:0 0 12px;font-weight:800}
 .hero p{color:var(--mut);margin:0 0 22px;max-width:620px}
 .search{width:100%;max-width:420px;padding:10px 14px;border:2px solid var(--ink);border-radius:10px;font:inherit;font-size:15px;background:#fff}
-.grid{max-width:1100px;margin:0 auto;padding:20px 22px 60px;display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:24px}
+.sec{max-width:1100px;margin:0 auto;padding:18px 22px 0}
+.sec h2.st{display:flex;align-items:center;gap:12px;margin:18px 0 0;font-size:24px;letter-spacing:-.6px}
+.sec h2.st::after{content:"";flex:1;height:2px;background:var(--ink)}
+.sec p.sd{margin:4px 0 0;color:var(--mut);font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:24px;padding:20px 0 30px}
 .card{display:flex;flex-direction:column;background:#fff;color:var(--ink);text-decoration:none;border:2px solid var(--ink);border-radius:14px;box-shadow:4px 4px 0 var(--ink);padding:20px;transition:transform .12s,box-shadow .12s}
 .card:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
 .icon{width:46px;height:46px;border-radius:10px;border:2px solid var(--ink);background:var(--y);display:grid;place-items:center;font-size:24px;margin-bottom:14px}
+.notes .icon{background:var(--lav)}
 .card h2{margin:0 0 6px;font-size:19px;letter-spacing:-.3px;line-height:1.25}
 .card p{margin:0 0 16px;color:#444;font-size:14px;flex:1}
 .meta{display:flex;justify-content:space-between;align-items:center;font:700 11px 'JetBrains Mono',monospace;letter-spacing:.08em}
 .pill{background:var(--lav);border:2px solid var(--ink);border-radius:99px;padding:2px 10px}
 .go{font-weight:800}
 .empty{grid-column:1/-1;color:var(--mut);text-align:center;padding:30px}
+.nores{max-width:1100px;margin:0 auto;padding:30px 22px;text-align:center;color:var(--mut);display:none}
 </style>
 </head>
 <body>
@@ -36,41 +42,59 @@ h1{font-size:clamp(30px,5vw,46px);line-height:1.1;letter-spacing:-1.3px;margin:0
   <p>Pick a guide below. Each one opens as its own page with questions, answers and a search box.</p>
   <input class="search" id="s" placeholder="Search guides…" autocomplete="off">
 </div>
-<div class="grid" id="grid"></div>
+
+<section class="sec" id="sec-q">
+  <h2 class="st">Interview Prep Questions</h2>
+  <p class="sd">Question banks with interview-ready answers.</p>
+  <div class="grid" id="grid-q"></div>
+</section>
+
+<section class="sec notes" id="sec-n">
+  <h2 class="st">AI Notes</h2>
+  <p class="sd">Study notes and daily learning material.</p>
+  <div class="grid" id="grid-n"></div>
+</section>
+<div class="nores" id="nores">No guides match your search.</div>
 
 <script>
-/* ADD A NEW GUIDE = ADD ONE LINE HERE.
-   file: the html filename in the same folder
+/* ADD A NEW GUIDE = ADD ONE LINE in the right list below.
+   file: the html filename in the same folder (or a full URL with external:true)
    count: optional text shown on the card (e.g. "224 questions") */
-const GUIDES = [
+const QUESTIONS = [
   { file: "data_scientist_interview_qa_v1.html", icon: "📊", title: "Data Scientist Interview Q&A V1", desc: "ML, deep learning, statistics, SQL, LLMs, culture fit and brainteasers.", count: "224 questions" },
   { file: "data-science-interview_qa_v2.html", icon: "🧠", title: "Data Scientist Interview Q&A V2", desc: "Statistics, data analysis, machine learning, deep learning and applied practice questions with worked answers.", count: "159 questions" },
   { file: "statistics-interview_v1.html", icon: "📈", title: "Statistics Interview Q&A V1", desc: "Distributions, hypothesis testing, regression, sampling, Bayesian methods and more, in short interview-style answers.", count: "84 questions" },
   { file: "https://aptai.in/courses/ai-interview-prep/", external: true, icon: "🚀", title: "Data Scientist Interview Q&A V3", desc: "AI & ML interview prep and Q&A bundle on Apt AI.", count: "APT AI" },
   { file: "ml_interview_questions_v1.html", icon: "💯", title: "100+ ML Interview Questions", desc: "Fundamentals, supervised and unsupervised learning, evaluation, feature engineering, deep learning and ML system design, answered with real trade-offs.", count: "110 questions" },
-  { file: "ml_interview_questions_v2.html", icon: "📚", title: "AI / ML Engineer Questions", desc: "Math, classical ML, deep learning, transformers, LLMs, RAG, MLOps, system design, a coding toolkit and a 31-question Q&A bank.", count: "17 chapters" },  
-  { file: "transformer_architecture_interview_questions_v1.html", icon: "🗄️", title: "Transformer Architecture Interview Prep", desc: "Transformer Architecture Interview Prep If you work with LLMs, these fundamentals should feel natural.", count: "20 questions" },  
-  { file: "language-models-interview-handbook.html", icon: "🤖", title: "Language Models Interview Handbook", desc: "LLM Concepts and Questions", count: "168 questions" },  
+  { file: "ml_interview_questions_v2.html", icon: "📚", title: "AI / ML Engineer Questions", desc: "Math, classical ML, deep learning, transformers, LLMs, RAG, MLOps, system design, a coding toolkit and a 31-question Q&A bank.", count: "17 chapters" },
+  { file: "transformer_architecture_interview_questions_v1.html", icon: "🗄️", title: "Transformer Architecture Interview Prep", desc: "Transformer Architecture Interview Prep If you work with LLMs, these fundamentals should feel natural.", count: "20 questions" },
+  { file: "language-models-interview-handbook.html", icon: "🤖", title: "Language Models Interview Handbook", desc: "LLM Concepts and Questions", count: "168 questions" },
   { file: "https://aidemy.trainercentralsite.in/clientapp/app/course/23022000000014019/", external: true, icon: "🎯", title: "AI Interview Mastery Bundle", desc: "The AI Interview Mastery Bundle is an all-in-one, interview-focused learning program designed for engineers preparing for Machine Learning, Deep Learning, and Generative AI roles.", count: "AIDEMY" },
-  // { file: "sql.html", icon: "🗄️", title: "SQL Practice",     desc: "Short description of the guide.", count: "30 questions" },
+];
+const NOTES = [
+  { file: "daily-dose-of-data-science.html", icon: "📝", title: "Daily Dose of Data Science", desc: "AI and data science notes, one concept at a time.", count: "AI NOTES" },
+  // { file: "new-notes.html", icon: "📝", title: "Title", desc: "Short description.", count: "NOTES" },
 ];
 
-const grid = document.getElementById('grid');
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-function render(list){
-  grid.innerHTML = list.length ? list.map(g => `
-    <a class="card" href="${esc(g.file)}">
+const card = g => `
+    <a class="card" href="${esc(g.file)}"${g.external ? ' target="_blank" rel="noopener"' : ''}>
       <div class="icon">${g.icon || '📘'}</div>
       <h2>${esc(g.title)}</h2>
       <p>${esc(g.desc || '')}</p>
       <div class="meta"><span class="pill">${esc(g.count || 'GUIDE')}</span><span class="go">OPEN →</span></div>
-    </a>`).join('') : '<div class="empty">No guides match your search.</div>';
+    </a>`;
+function renderAll(v){
+  const f = l => l.filter(g => (g.title + ' ' + (g.desc || '')).toLowerCase().includes(v));
+  const q = f(QUESTIONS), n = f(NOTES);
+  document.getElementById('grid-q').innerHTML = q.map(card).join('');
+  document.getElementById('grid-n').innerHTML = n.map(card).join('');
+  document.getElementById('sec-q').style.display = q.length ? '' : 'none';
+  document.getElementById('sec-n').style.display = n.length ? '' : 'none';
+  document.getElementById('nores').style.display = (q.length || n.length) ? 'none' : 'block';
 }
-render(GUIDES);
-document.getElementById('s').addEventListener('input', e => {
-  const v = e.target.value.trim().toLowerCase();
-  render(GUIDES.filter(g => (g.title + ' ' + (g.desc || '')).toLowerCase().includes(v)));
-});
+renderAll('');
+document.getElementById('s').addEventListener('input', e => renderAll(e.target.value.trim().toLowerCase()));
 </script>
 </body>
 </html>
